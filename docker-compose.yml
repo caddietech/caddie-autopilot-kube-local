@@ -1,0 +1,30 @@
+
+version: '3.8'
+services:
+  caddie-autopilot-api:
+    image: caddie-autopilot-api
+    ports: 
+      - '8000:8000'
+    environment:
+      MONGODB_HOSTNAME: mongodb
+      MONGODB_DATABASE: autopilot
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - backend
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      - backend
+volumes:
+  mongo-volume:
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
